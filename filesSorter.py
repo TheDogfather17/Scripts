@@ -6,11 +6,11 @@ import shutil
 path = os.getcwd()
 doc_path = path + "\\levaniTxts\\"
 
-categories = {'E12':'_MP', 'E1':'AC_','E2':'OF_', 'E3':'NP_', 'E4':'FI_', 'E5':'NR_', 
-                'E6':'SU_','E7':'HP_', 'E8':'CP_', 'E9':'PC_', 'E99':'AR_',
+categories = {'E12':'_MP', 'E01':'AC_','E02':'OF_', 'E03':'NP_', 'E04':'FI_', 'E05':'NR_', 
+                'E06':'SU_','E07':'HP_', 'E08':'CP_', 'E09':'PC_', 'E99':'AR_',
                 'E13':'TB'}
-categories2 = {'E1':'HL_', 'E4':'DW_', 'E5':'NO_', 'E6':'IB_', 'E99':'DC_'}
-categories3 = {'E1':'8W_', 'E4':'AQ_', }
+categories2 = {'E01':'HL_', 'E04':'DW_', 'E05':'NO_', 'E06':'IB_', 'E99':'DC_'}
+categories3 = {'E01':'8W_', 'E04':'AQ_', }
 
 def SortFiles(key, value):
         for item in os.listdir(doc_path):
