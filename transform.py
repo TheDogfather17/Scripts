@@ -86,6 +86,8 @@ def CountElements(item, row):
     return count
 
 def GetText(FileName):
+    if not os.path.isdir('InputFiles'):
+        os.mkdir('InputFiles')
     File = open('InputFiles//'+FileName, 'r', encoding='utf-8')
     FileData = File.read()
     return FileData
