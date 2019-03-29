@@ -86,7 +86,7 @@ def CountElements(item, row):
     return count
 
 def GetText(FileName):
-    File = open(FileName, 'r', encoding='utf-8')
+    File = open('InputFiles//'+FileName, 'r', encoding='utf-8')
     FileData = File.read()
     return FileData
     
