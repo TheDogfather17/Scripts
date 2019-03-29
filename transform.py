@@ -4,7 +4,7 @@ import numpy as np
 import copy
 import os
 #import xml.etree.ElementTree as xml
-df = pd.read_csv('extractions.csv', encoding='utf-8')
+df = pd.read_csv('extractions.csv', encoding='ISO-8859-1', engine='python')
 #df.replace('', np.nan, inplace=True)
 
 def GenerateXML(index, row):
@@ -44,16 +44,18 @@ def GenerateXML(index, row):
 #         Product = row['Product'+str(i)]
 #         tree.findall('ETARGET/FIELD')[i].attrib['BASE'] = Product
 
+    try:
+        tree.find('SECTION').text = FileData
+        tree.find('SECTION').text = etree.CDATA(tree.find('SECTION').text)    
 
-    tree.find('SECTION').text = FileData
-    tree.find('SECTION').text = etree.CDATA(tree.find('SECTION').text)    
 
+        tree.find('//FIELD[@NAME = \'CorrespondenceDated\']').attrib['BASE'] = Date
+        tree.find('//FIELD[@NAME = \'ProviderName\']').attrib['BASE'] = Provider
+        tree.find('//FIELD[@NAME = \'DebtorName\']').attrib['BASE'] = Debtor
+        tree.find('CTARGET').attrib['NAME'] = category
 
-    tree.find('//FIELD[@NAME = \'CorrespondenceDated\']').attrib['BASE'] = Date
-    tree.find('//FIELD[@NAME = \'ProviderName\']').attrib['BASE'] = Provider
-    tree.find('//FIELD[@NAME = \'DebtorName\']').attrib['BASE'] = Debtor
-    tree.find('CTARGET').attrib['NAME'] = category
-
+    except:
+        print('An exception occured with:', row.FileName)
     for item in tree.findall('//FIELD'):
         if item.attrib['BASE']=='' or item.attrib['BASE']==' ':
             item.getparent().remove(item)
@@ -88,9 +90,14 @@ def CountElements(item, row):
 def GetText(FileName):
     if not os.path.isdir('InputFiles'):
         os.mkdir('InputFiles')
-    File = open('InputFiles//'+FileName, 'r', encoding='utf-8')
-    FileData = File.read()
-    return FileData
+    try:
+        File = open('InputFiles//'+FileName, 'r', encoding='utf-8')
+        FileData = File.read()
+        return FileData
+    except:
+        print('problem with file')
+	#FileData = str(FileData, errors='ignore')
+    
     
 for index, row in df.iterrows():
     print(GenerateXML(index, row), " done")
